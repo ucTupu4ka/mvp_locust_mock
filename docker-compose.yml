@@ -1,0 +1,16 @@
+services:
+  mock_api:
+    build: ./mock_api
+    container_name: mock_api
+    ports:
+      - "8000:8000"
+
+  locust:
+    build: ./locust
+    container_name: locust
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mock_api
+    command: >
+      locust -f /mnt/locust/locustfile.py --host http://mock_api:8000
