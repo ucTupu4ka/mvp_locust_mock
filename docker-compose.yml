@@ -1,16 +1,16 @@
-services:
-  mock_api:
-    build: ./mock_api
-    container_name: mock_api
-    ports:
-      - "8000:8000"
+services: # Объявляем сервисы Compose (контейнеры), которые будут запущены.
+  mock_api: # Имя сервиса для mock HTTP API.
+    build: ./mock_api # Собираем образ `mock_api` из локальной папки.
+    container_name: mock_api # Фиксированное имя контейнера (удобно для отладки).
+    ports: # Проброс портов между хостом и контейнером.
+      - "8000:8000" # Открываем FastAPI на хост-порту 8000 (контейнер: 8000).
 
-  locust:
-    build: ./locust
-    container_name: locust
-    ports:
-      - "8089:8089"
-    depends_on:
-      - mock_api
-    command: >
+  locust: # Имя сервиса для Locust (генерация нагрузки + UI).
+    build: ./locust # Собираем образ `locust` из локальной папки.
+    container_name: locust # Фиксированное имя контейнера (стабильные логи и инспекция).
+    ports: # Проброс порта для доступа к UI Locust с хоста.
+      - "8089:8089" # Открываем веб-интерфейс Locust на хост-порту 8089.
+    depends_on: # Гарантируем старт API перед подключением Locust.
+      - mock_api # Контейнер `locust` зависит от сервиса `mock_api`.
+    command: > # Команда контейнера: запускаем Locust и указываем target через Docker-сеть.
       locust -f /mnt/locust/locustfile.py --host http://mock_api:8000

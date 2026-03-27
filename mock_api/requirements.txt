@@ -1,2 +1,2 @@
-fastapi
-uvicorn[standard]
+fastapi # Веб-фреймворк для mock API.
+uvicorn[standard] # ASGI-сервер для запуска FastAPI.

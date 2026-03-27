@@ -1,4 +1,4 @@
-__pycache__/
-*.pyc
-.venv/
-.DS_Store
+__pycache__/ # Ignore Python bytecode cache directory.
+*.pyc # Ignore compiled Python bytecode files.
+.venv/ # Ignore virtual environment folder.
+.DS_Store # Ignore macOS Finder metadata files.
